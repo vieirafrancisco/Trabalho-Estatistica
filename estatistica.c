@@ -15,7 +15,7 @@ void rol(double arr[]);
 double mediaArit(const double arr[]);
 double mediaPond(double arr[]);
 double mediana(double arr[]);
-double moda(const double arr[]);
+double moda(double arr[]);
 
 // Prototipos de funcoes auxiliares
 double maximo(const double arr[]);
@@ -199,6 +199,12 @@ void calcular(void){ // Calcular dados
         calcular();
         break;
 
+        case 6:
+        system(LIMPAR);
+        printf("Moda: %.2f\n", moda(gDadosQuant));
+        calcular();
+        break;
+
         default:
         break;
     }
@@ -236,20 +242,42 @@ double mediaPond(double arr[]){ // Retorna a media ponderada de um conjunto de d
 }
 
 double mediana(double arr[]){
-  rol(arr); // Ordenar o conjunto
-  int indice; // Indice do valor da mediana
+    rol(arr); // Ordenar o conjunto
+    int indice; // Indice do valor da mediana
 
-  if(gTamanho % 2 == 0){
-    indice = (int)(gTamanho + 1)/2;
-    return (arr[indice - 1] + arr[indice])/2; // Como o intervalo do array começa de 0, então reduzimos um valor ao indice
-  } else if(gTamanho % 2 == 1){
-    indice = (gTamanho + 1)/2;
-    return arr[indice - 1]; // Como o intervalo do array começa de 0, então reduzimos um valor ao indice
-  }
+    if(gTamanho % 2 == 0){
+        indice = (int)(gTamanho + 1)/2;
+        return (arr[indice - 1] + arr[indice])/2; // Como o intervalo do array começa de 0, então reduzimos um valor ao indice
+    } else if(gTamanho % 2 == 1){
+        indice = (gTamanho + 1)/2;
+        return arr[indice - 1]; // Como o intervalo do array começa de 0, então reduzimos um valor ao indice
+    }
 }
 
-double moda(const double arr[]){
-  
+double moda(double arr[]){
+    rol(arr); // Ordenar os dados
+    int i; // Contador para percorrer o conjunto
+    int frequencia[gTamanho];
+    int indice;
+    int cont = 0; // Contador de vezes que um número se repete
+    int max = 0;
+
+    for(i = 0; i < gTamanho; i++){
+        cont++;
+        if(i == gTamanho - 1 || arr[i] != arr[i + 1]){
+            frequencia[i] = cont;
+            cont = 0;
+        }
+    }
+
+    for(i = 0; i < gTamanho; i++){
+        if(frequencia[i] > max){
+            max = frequencia[i];
+            indice = i;
+        }
+    }
+
+    return arr[indice];
 }
 
 double maximo(const double arr[]){ // Retorna o indice do valor maximo do vetor
