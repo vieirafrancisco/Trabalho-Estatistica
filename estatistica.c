@@ -7,24 +7,27 @@
 void menu(void);
 void inserirDados(void);
 void calcular(void);
-void qualitativo(void);
-void quantitativo(void);
 
 // Prototipos de funcoes para os calculos
 void rol(double arr[]);
+double intervaloDeClasses(double arr[]); // Falta fazer
 double mediaArit(const double arr[]);
-double mediaPond(double arr[]);
+double mediaPond(const double arr[]);
+void moda(double arr[]);
 double mediana(double arr[]);
-double moda(double arr[]);
+double quartil(double arr[]);
+double decil(double arr[]);
+double percentil(double arr[]);
+double varianca(const double arr[]);
+double desvioPadrao(const double arr[]);
+double coeficienteDeVariacao(const double arr[]); // Falta fazer
 
 // Prototipos de funcoes auxiliares
 double maximo(const double arr[]);
 void printArray(const double arr[]);
 
 // Variaveis globais
-char gTipo;
-double gDadosQuant[SIZE] = {0};
-char gDadosQuali[SIZE][SIZE];
+double gDados[SIZE] = {0};
 int gTamanho;
 
 int main(){
@@ -32,6 +35,10 @@ int main(){
     menu();
     return 0;
 }
+
+/* =================================================================================
+                                FUNÇÕES DO MENU
+   ================================================================================= */
 
 void menu(void){ // Menu de opcoes
     printf("====================================\n");
@@ -60,67 +67,14 @@ void menu(void){ // Menu de opcoes
         break;
 
         default:
+        system(LIMPAR);
+        printf("ERRO! Valor inserido nao permitido.\n");
+        menu();
         break;
     }
 }
 
 void inserirDados(void){ // Inserir os dados
-    printf("=====================================\n");
-    printf("                 DADOS               \n");
-    printf("=====================================\n");
-    printf("[1] Qualitativo\n");
-    printf("[2] Quantitativo\n");
-    printf("=======================================\n");
-    printf(">> ");
-
-    int val;
-    scanf("%d", &val);
-    switch(val){
-        case 1:
-        system(LIMPAR);
-        break;
-
-        case 2:
-        system(LIMPAR);
-        quantitativo();
-        break;
-
-        default:
-        break;
-    }
-
-}
-
-
-void qualitativo(void){ // Inserir dados quanlitativos
-    gTipo = 'l';
-
-    printf("=======================================\n");
-    printf("                 DADOS                 \n");
-    printf("=======================================\n");
-    printf("[1] Nominal\n");
-    printf("[2] Ordinal\n");
-    printf("=======================================\n");
-    printf(">> ");
-
-    int val;
-    scanf("%d", &val);
-    switch(val){
-        case 1:
-        system(LIMPAR);
-        break;
-
-        case 2:
-        system(LIMPAR);
-        break;
-
-        default:
-        break;
-    }
-}
-
-void quantitativo(void){ // Inserir dados quantitativos
-    gTipo = 't';
     int dados; // Contador para inserir os dados flutuantes
 
     printf("=======================================\n");
@@ -141,7 +95,7 @@ void quantitativo(void){ // Inserir dados quantitativos
     printf(">> ");
 
     for(dados = 0; dados < gTamanho; dados++){
-        scanf("%lf", &gDadosQuant[dados]);
+        scanf("%lf", &gDados[dados]);
     }
 
     system(LIMPAR);
@@ -152,12 +106,23 @@ void calcular(void){ // Calcular dados
     printf("=======================================\n");
     printf("                 CALCULAR              \n");
     printf("=======================================\n");
-    printf("[1] ROL\n");
-    printf("[2] Intervalo de Classes\n");
-    printf("[3] Media Aritmetica\n");
-    printf("[4] Media Ponderada\n");
-    printf("[5] Mediana\n");
-    printf("[6] Moda\n");
+    printf(" [1] ROL\n");
+    printf(" [2] Intervalo de Classes\n");
+    printf(" [3] Media Aritmetica\n");
+    printf(" [4] Media Ponderada\n");
+    printf(" [5] Mediana\n");
+    printf(" [6] Moda\n");
+    printf(" [7] Porcentagem\n");
+    printf(" [8] Quartil\n");
+    printf(" [9] Decil\n");
+    printf("[10] Percentil\n");
+    printf("[11] Variancia\n");
+    printf("[12] Desvio Padrao\n");
+    printf("[13] Coeficiente de Variacao\n");
+    printf("[14] Erro Padrao\n");
+    printf("[15] Probabilidade Basica\n");
+    printf("[16] Distribuicao Binomial\n");
+    printf("[17] Distribuicao de Poisson\n");
     printf("\n                           [0] Voltar\n");
     printf("=======================================\n");
     printf(">> ");
@@ -172,9 +137,9 @@ void calcular(void){ // Calcular dados
 
         case 1:
         system(LIMPAR);
-        rol(gDadosQuant);
+        rol(gDados);
         printf("ROL -> ");
-        printArray(gDadosQuant);
+        printArray(gDados);
         calcular();
         break;
 
@@ -184,31 +149,47 @@ void calcular(void){ // Calcular dados
 
         case 3:
         system(LIMPAR);
-        printf("Media Aritmetica: %.2f\n", mediaArit(gDadosQuant));
+        printf("Media Aritmetica: %.2f\n", mediaArit(gDados));
         calcular();
         break;
 
         case 4:
         system(LIMPAR);
+        printf("Media Ponderada: %.2f\n", mediaPond(gDados));
         calcular();
         break;
 
         case 5:
         system(LIMPAR);
-        printf("Mediana: %.2f\n", mediana(gDadosQuant));
+        printf("Mediana: %.2f\n", mediana(gDados));
         calcular();
         break;
 
         case 6:
         system(LIMPAR);
-        printf("Moda: %.2f\n", moda(gDadosQuant));
+        moda(gDados);
+        calcular();
+        break;
+
+        case 7:
+        break;
+
+        case 8:
+        system(LIMPAR);
         calcular();
         break;
 
         default:
+        system(LIMPAR);
+        printf("ERRO! Valor inserido nao permitido.");
+        calcular();
         break;
     }
 }
+
+/* =================================================================================
+                                FUNÇÕES PARA CALCULAR
+   ================================================================================= */
 
 void rol(double arr[]){ // Funcao de ordenação
     int i;
@@ -237,8 +218,45 @@ double mediaArit(const double arr[]){ // Retorna a media aritmetica de um conjun
     return soma/gTamanho;
 }
 
-double mediaPond(double arr[]){ // Retorna a media ponderada de um conjunto de dados flutuantes
-  // SOME CODE
+double mediaPond(const double arr[]){ // Retorna a media ponderada de um conjunto de dados flutuantes
+  int pesos[gTamanho];
+  int somaPesos = 0;
+  double somaValores = 0;
+
+  for(int p = 0; p < gTamanho; p++){
+      printf(">> Digite o peso do valor %.2f:\n>> ", arr[p]);
+      scanf("%d", &pesos[p]); // Adicionar pesos em uma lista
+      system(LIMPAR); // Limpar a tela
+      somaPesos += pesos[p]; // Recebe a soma dos pesos
+      somaValores += arr[p] * pesos[p]; // Recebe soma dos valores multiplicados por seus respectivos pesos
+  }
+
+  return somaValores/somaPesos;
+}
+
+void moda(double arr[]){
+    rol(arr); // Ordenar os dados
+    double frequencia[gTamanho]; // Lista de frequencia
+    int cont = 0;
+    double max;
+
+    for(int f = 0; f < gTamanho; f++){ // Calcula a frequencia
+        cont++;
+        if(f == (gTamanho - 1) || arr[f] != arr[f + 1]){
+            frequencia[f] = (double)cont;
+            cont = 0;
+        }
+    }
+
+    max = maximo(frequencia); // Recebe o maior valor do conjunto de dados
+
+    printf("Moda: ");
+    for(int i = 0; i < gTamanho; i++){ // Encontra a(s) moda(s) e depois imprime
+        if(frequencia[i] == max){
+            printf("(%.0f) %.2f ", frequencia[i], arr[i]);
+        }
+    }
+    printf("\n");
 }
 
 double mediana(double arr[]){
@@ -254,31 +272,9 @@ double mediana(double arr[]){
     }
 }
 
-double moda(double arr[]){
-    rol(arr); // Ordenar os dados
-    int i; // Contador para percorrer o conjunto
-    int frequencia[gTamanho];
-    int indice;
-    int cont = 0; // Contador de vezes que um número se repete
-    int max = 0;
-
-    for(i = 0; i < gTamanho; i++){
-        cont++;
-        if(i == gTamanho - 1 || arr[i] != arr[i + 1]){
-            frequencia[i] = cont;
-            cont = 0;
-        }
-    }
-
-    for(i = 0; i < gTamanho; i++){
-        if(frequencia[i] > max){
-            max = frequencia[i];
-            indice = i;
-        }
-    }
-
-    return arr[indice];
-}
+/* =================================================================================
+                                FUNÇÕES AUXILIARES
+   ================================================================================= */
 
 double maximo(const double arr[]){ // Retorna o indice do valor maximo do vetor
     int dado; // Contador para passar pelos dados
