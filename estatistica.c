@@ -11,7 +11,7 @@ void calcular(void);
 
 // Prototipos de funcoes para os calculos
 void rol(double arr[]);
-double intervaloDeClasses(double arr[]);
+void intervaloDeClasses(double arr[]);
 double mediaArit(const double arr[]);
 double mediaPond(const double arr[]);
 void moda(double arr[]);
@@ -150,7 +150,7 @@ void calcular(void){ // Calcular dados
 
         case '2':
         system(LIMPAR);
-        printf("Intervalo de Classes: %.2f\n", intervaloDeClasses(gDados));
+        intervaloDeClasses(gDados);
         calcular();
         break;
 
@@ -255,14 +255,23 @@ void rol(double arr[]){ // Funcao de ordenação
     }
 }
 
-double intervaloDeClasses(double arr[]){
+void intervaloDeClasses(double arr[]){
+    rol(arr); // Ordenar conjunto
     double amp = amplitude(arr);
-    double k = round(sqrt(gTamanho));
+    double k = round(sqrt(gTamanho)); // Número de classes
     double h;
+    double limInferior;
+    double limSuperior;
 
     h = amp / k;
+    limInferior = arr[0];
+    limSuperior = limInferior + h;
 
-    return h;
+    for(int i = 0; i < (int)k; i++){
+        printf("%.2f |--- %.2f\n", limInferior, limSuperior);
+        limInferior = limSuperior;
+        limSuperior = limInferior + h;
+    }
 }
 
 double mediaArit(const double arr[]){ // Retorna a media aritmetica de um conjunto de dados flutuantes
@@ -383,10 +392,12 @@ double percentil(double arr[], double p){
     double per = p * (gTamanho + 1);
     int indice = (int) per;
 
-    if(indice == per){
-        return arr[indice - 1];
-    } else if(indice == 0){
-        return arr[indice];
+    if(indice >= gTamanho){ // Caso o valor do indice esteja acima do ultimo valor do indice
+        return arr[gTamanho - 1]; // Retornar o último valor do conjunto
+    } else if(indice == 0){ // Caso a valor do indice esteja abaixo do primeiro valor do conjunto
+        return arr[indice]; // Retornar o primeiro valor do conjunto
+    }else if(indice == per){ // Caso o valor do percentil já seja um valor inteiro
+        return arr[indice - 1];;
     }else{
         return (arr[indice - 1] + arr[indice])/2;
     }
