@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #define SIZE 1000
 #define LIMPAR "cls"
 
@@ -10,21 +11,26 @@ void calcular(void);
 
 // Prototipos de funcoes para os calculos
 void rol(double arr[]);
-double intervaloDeClasses(double arr[]); // Falta fazer
+double intervaloDeClasses(double arr[]);
 double mediaArit(const double arr[]);
 double mediaPond(const double arr[]);
 void moda(double arr[]);
+void porcentagem(double arr[]); // Falta fazer
 double mediana(double arr[]);
 double quartil(double arr[]);
 double decil(double arr[]);
-double percentil(double arr[]);
-double varianca(const double arr[]);
+double percentil(double arr[], double p);
+double variancia(const double arr[]);
 double desvioPadrao(const double arr[]);
-double coeficienteDeVariacao(const double arr[]); // Falta fazer
+double coeficienteDeVariacao(const double arr[]);
+double erroPadrao(const double arr[]); // Falta fazer
+double distribuicaoBinomial(const double arr[]); // Falta fazer
+double distribuicaoDePoisson(const double arr[]); // Falta fazer
 
 // Prototipos de funcoes auxiliares
 double maximo(const double arr[]);
 void printArray(const double arr[]);
+double amplitude(double arr[]);
 
 // Variaveis globais
 double gDados[SIZE] = {0};
@@ -50,18 +56,18 @@ void menu(void){ // Menu de opcoes
     printf("====================================\n");
     printf(">> ");
 
-    int val;
-    scanf("%d", &val);
+    char val;
+    scanf(" %c", &val);
     switch(val){
-        case 0:
+        case '0':
         break;
 
-        case 1:
+        case '1':
         system(LIMPAR);
         inserirDados();
         break;
 
-        case 2:
+        case '2':
         system(LIMPAR);
         calcular();
         break;
@@ -90,7 +96,7 @@ void inserirDados(void){ // Inserir os dados
     printf("=======================================\n");
     printf("                 DADOS                 \n");
     printf("=======================================\n");
-    printf("Inserir Dados::\n");
+    printf("Inserir Dados:\n");
     printf("=======================================\n");
     printf(">> ");
 
@@ -106,36 +112,35 @@ void calcular(void){ // Calcular dados
     printf("=======================================\n");
     printf("                 CALCULAR              \n");
     printf("=======================================\n");
-    printf(" [1] ROL\n");
-    printf(" [2] Intervalo de Classes\n");
-    printf(" [3] Media Aritmetica\n");
-    printf(" [4] Media Ponderada\n");
-    printf(" [5] Mediana\n");
-    printf(" [6] Moda\n");
-    printf(" [7] Porcentagem\n");
-    printf(" [8] Quartil\n");
-    printf(" [9] Decil\n");
-    printf("[10] Percentil\n");
-    printf("[11] Variancia\n");
-    printf("[12] Desvio Padrao\n");
-    printf("[13] Coeficiente de Variacao\n");
-    printf("[14] Erro Padrao\n");
-    printf("[15] Probabilidade Basica\n");
-    printf("[16] Distribuicao Binomial\n");
-    printf("[17] Distribuicao de Poisson\n");
+    printf("[1] ROL\n");
+    printf("[2] Intervalo de Classes\n");
+    printf("[3] Media Aritmetica\n");
+    printf("[4] Media Ponderada\n");
+    printf("[5] Mediana\n");
+    printf("[6] Moda\n");
+    printf("[7] Porcentagem\n");
+    printf("[8] Quartil\n");
+    printf("[9] Decil\n");
+    printf("[a] Percentil\n");
+    printf("[b] Variancia\n");
+    printf("[c] Desvio Padrao\n");
+    printf("[d] Coeficiente de Variacao\n");
+    printf("[e] Erro Padrao\n");
+    printf("[f] Distribuicao Binomial\n");
+    printf("[g] Distribuicao de Poisson\n");
     printf("\n                           [0] Voltar\n");
     printf("=======================================\n");
     printf(">> ");
 
-    int val;
-    scanf("%d", &val);
+    char val;
+    scanf(" %c", &val);
     switch(val){
-        case 0:
+        case '0':
         system(LIMPAR);
         menu();
         break;
 
-        case 1:
+        case '1':
         system(LIMPAR);
         rol(gDados);
         printf("ROL -> ");
@@ -143,45 +148,88 @@ void calcular(void){ // Calcular dados
         calcular();
         break;
 
-        case 2:
+        case '2':
         system(LIMPAR);
+        printf("Intervalo de Classes: %.2f\n", intervaloDeClasses(gDados));
+        calcular();
         break;
 
-        case 3:
+        case '3':
         system(LIMPAR);
         printf("Media Aritmetica: %.2f\n", mediaArit(gDados));
         calcular();
         break;
 
-        case 4:
+        case '4':
         system(LIMPAR);
         printf("Media Ponderada: %.2f\n", mediaPond(gDados));
         calcular();
         break;
 
-        case 5:
+        case '5':
         system(LIMPAR);
         printf("Mediana: %.2f\n", mediana(gDados));
         calcular();
         break;
 
-        case 6:
+        case '6':
         system(LIMPAR);
         moda(gDados);
         calcular();
         break;
 
-        case 7:
+        case '7':
+        system(LIMPAR);
+        calcular();
         break;
 
-        case 8:
+        case '8':
         system(LIMPAR);
+        printf("Quartil: %.2f\n", quartil(gDados));
+        calcular();
+        break;
+
+        case '9':
+        system(LIMPAR);
+        printf("Decil: %.2f\n", decil(gDados));
+        calcular();
+        break;
+
+        case 'a':
+        system(LIMPAR);
+        printf("============================================================\n");
+        printf("Digite a medida do percentil: (ex: 0.24 = 24%%, 0.38 = 38%%)\n");
+        printf(">> ");
+
+        float medida;
+        scanf("%f", &medida);
+        system(LIMPAR);
+
+        printf("Percentil %.2f: %.2f\n", medida, percentil(gDados, medida));
+        calcular();
+        break;
+
+        case 'b': // Variancia
+        system(LIMPAR);
+        printf("Variancia: %.2f\n", variancia(gDados));
+        calcular();
+        break;
+
+        case 'c':
+        system(LIMPAR);
+        printf("Desvio Padrao: %.2f\n", desvioPadrao(gDados));
+        calcular();
+        break;
+
+        case 'd':
+        system(LIMPAR);
+        printf("Coeficiente de Variacao: %.2f\n", coeficienteDeVariacao(gDados));
         calcular();
         break;
 
         default:
         system(LIMPAR);
-        printf("ERRO! Valor inserido nao permitido.");
+        printf("ERRO! Valor inserido nao permitido.\n");
         calcular();
         break;
     }
@@ -205,6 +253,16 @@ void rol(double arr[]){ // Funcao de ordenação
             }
         }
     }
+}
+
+double intervaloDeClasses(double arr[]){
+    double amp = amplitude(arr);
+    double k = round(sqrt(gTamanho));
+    double h;
+
+    h = amp / k;
+
+    return h;
 }
 
 double mediaArit(const double arr[]){ // Retorna a media aritmetica de um conjunto de dados flutuantes
@@ -272,9 +330,114 @@ double mediana(double arr[]){
     }
 }
 
+double quartil(double arr[]){
+    double per; // Valor do percentil
+
+    printf("====================================\n");
+    printf("[1] Primeiro Quartil\n");
+    printf("[2] Segundo Quartil\n");
+    printf("[3] Terceiro Quartil\n");
+    printf("====================================\n");
+    printf(">> ");
+
+    char v; // Variavel do tipo char para escolher uma das opções anteriores
+    scanf(" %c", &v);
+    system(LIMPAR);
+
+    if(v == '1'){
+        per = percentil(arr, 0.25);
+    } else if(v == '2'){
+        per = percentil(arr, 0.50);
+    } else if(v == '3'){
+        per = percentil(arr, 0.75);
+    } else{
+        printf("ERRO! Valor inserido nao permitido.\n");
+    }
+
+    return per;
+}
+
+double decil(double arr[]){
+    double per; // Valor do percentil
+
+    printf("====================================\n");
+    printf("Digite qual Decil(de 1 a 9)\n");
+    printf("====================================\n");
+    printf(">> ");
+
+    int v;
+    scanf("%d", &v);
+    system(LIMPAR);
+
+    if(v >= 1 && v <= 9){
+        per = percentil(arr, 0.1*v);
+    } else{
+        printf("ERRO! Valor inserido nao permitido.\n");
+    }
+
+    return per;
+}
+
+double percentil(double arr[], double p){
+    rol(arr); // Ordenar conjunto de dados
+    double per = p * (gTamanho + 1);
+    int indice = (int) per;
+
+    if(indice == per){
+        return arr[indice - 1];
+    } else if(indice == 0){
+        return arr[indice];
+    }else{
+        return (arr[indice - 1] + arr[indice])/2;
+    }
+}
+
+double variancia(const double arr[]){
+    double X = mediaArit(arr); // Média do conjunto de dados
+    double soma = 0;
+    char c;
+
+    for(int i = 0; i < gTamanho; i++){
+        soma += (arr[i] - X) * (arr[i] - X);
+    }
+
+    printf("====================================\n");
+    printf("[1] Amostra\n");
+    printf("[2] Populacao\n");
+    printf("====================================\n");
+    printf(">> ");
+
+    scanf(" %c", &c);
+    system(LIMPAR);
+
+    if(c == '1'){
+        return soma/(gTamanho - 1);
+    } else if(c == '2'){
+        return soma/gTamanho;
+    } else{
+        printf("ERRO! Valor inserido nao permitido.\n");
+        return 0;
+    }
+}
+
+double desvioPadrao(const double arr[]){
+    double var = variancia(arr); // Variancia
+
+    return pow(var, 0.5); // Raiz quadrada da variancia
+}
+
+double coeficienteDeVariacao(const double arr[]){
+    double s = desvioPadrao(arr); // Desvio padrão
+    double X = mediaArit(arr); // Média do conjunto
+
+    return (s/X) * 100;
+}
+
 /* =================================================================================
                                 FUNÇÕES AUXILIARES
    ================================================================================= */
+
+
 
 double maximo(const double arr[]){ // Retorna o indice do valor maximo do vetor
     int dado; // Contador para passar pelos dados
@@ -297,4 +460,10 @@ void printArray(const double arr[]){
     printf("%.2f ", arr[dado]);
   }
   printf("\n");
+}
+
+double amplitude(double arr[]){
+    rol(arr); // Ordenar o conjunto de dados
+
+    return arr[gTamanho - 1] - arr[0];
 }
