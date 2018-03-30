@@ -15,7 +15,7 @@ void intervaloDeClasses(double arr[]);
 double mediaArit(const double arr[]);
 double mediaPond(const double arr[]);
 void moda(double arr[]);
-void porcentagem(double arr[]); // Falta fazer
+double porcentagem(const double arr[]);
 double mediana(double arr[]);
 double quartil(double arr[]);
 double decil(double arr[]);
@@ -180,6 +180,7 @@ void calcular(void){ // Calcular dados
 
         case '7':
         system(LIMPAR);
+        printf("Porcentagem: %.1f%%\n", porcentagem(gDados));
         calcular();
         break;
 
@@ -239,7 +240,7 @@ void calcular(void){ // Calcular dados
                                 FUNÇÕES PARA CALCULAR
    ================================================================================= */
 
-void rol(double arr[]){ // Funcao de ordenação
+void rol(double arr[]){ // Função de ordenação
     int i;
     int j;
     double aux; // Segurar valor para a troca
@@ -324,6 +325,66 @@ void moda(double arr[]){
         }
     }
     printf("\n");
+}
+
+double porcentagem(const double arr[]){
+    double n1, n2; // Variaveis para valores dados pelo unsuario
+    double porc; // Porcentagem
+    int cont = 0; // Contador
+
+    printf("====================================\n");
+    printf("[1] Menor\n");
+    printf("[2] Maior\n");
+    printf("[3] Igual\n");
+    printf("[4] Intervalo\n");
+    printf("====================================\n");
+    printf(">> ");
+
+    char escolha;
+    scanf(" %c", &escolha);
+
+    system(LIMPAR);
+    if(escolha == '1'){
+        printf("Digite um valor para saber a porcentagem dos valores menores que ele:\n");
+        printf(">> ");
+        scanf("%lf", &n1);
+        for(int i = 0; i < gTamanho; i++){
+            if(arr[i] < n1){
+                cont++;
+            }
+        }
+    } else if(escolha == '2'){
+        printf("Digite um valor para saber a porcentagem dos valores maiores que ele:\n");
+        printf(">> ");
+        scanf("%lf", &n1);
+        for(int i = 0; i < gTamanho; i++){
+            if(arr[i] < n1){
+                cont++;
+            }
+        }
+    } else if(escolha == '3'){
+        printf("Digite um valor para saber a porcentagem dos valores iguais a ele:\n");
+        printf(">> ");
+        scanf("%lf", &n1);
+        for(int i = 0; i < gTamanho; i++){
+            if(arr[i] == n1){
+                cont++;
+            }
+        }
+    } else if(escolha == '4'){
+        printf("Digite os valorres de um intervalo para saber a porcentagem dos valores presentes nele:\n");
+        printf(">> ");
+        scanf("%lf%lf", &n1, &n2);
+        for(int i = 0; i < gTamanho; i++){
+            if(arr[i] >= n1 && arr[i] <= n2){
+                cont++;
+            }
+        }
+    }
+    porc = (cont * 100)/gTamanho;
+    system(LIMPAR);
+
+    return porc;
 }
 
 double mediana(double arr[]){
