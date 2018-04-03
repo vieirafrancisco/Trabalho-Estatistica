@@ -21,7 +21,7 @@ double maximo(const double arr[], int len){ // Retorna o indice do valor maximo 
 void printArray(const double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
-  for(int dado = 0; dado < len; dado++){ // Loop para imprimir o conjunto de dados
+  for(int dado = 0; dado < len; dado++){ /* loop to print array */
     printf("%.2f ", arr[dado]);
   }
   printf("\n");
@@ -30,7 +30,7 @@ void printArray(const double arr[], int len){
 double amplitude(double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
-    sort(arr, len); // Ordenar o conjunto de dados
+    sort(arr, len); /* sort the set */
 
     return arr[len - 1] - arr[0];
 }

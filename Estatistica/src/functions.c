@@ -67,9 +67,9 @@ void moda(double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
     rol(arr, len); /* sort the set */
-    int freqLength;
+    int freqLength; /* size of unique values array */
     int cont = 0;
-    double max;
+    double max; /* max value of frequency array variable */
 
     freqLength = unique(arr, len); /* return number of the diferent values int the array */
 
@@ -90,9 +90,9 @@ void moda(double arr[], int len){
 double porcentagem(const double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
-    double n1, n2; // Variaveis para valores dados pelo unsuario
-    double porc; // Porcentagem
-    int cont = 0; // Contador
+    double n1, n2; /* variables to the intervals */
+    double porc; /* percentage */
+    int cont = 0; /* counter */
 
     printf("====================================\n");
     printf("[1] Menor\n");
@@ -102,11 +102,11 @@ double porcentagem(const double arr[], int len){
     printf("====================================\n");
     printf(">> ");
 
-    char escolha;
-    scanf(" %c", &escolha);
+    char choose;
+    scanf(" %c", &choose);
 
     system(LIMPAR);
-    if(escolha == '1'){
+    if(choose == '1'){
         printf("Digite um valor para saber a porcentagem dos valores menores que ele:\n");
         printf(">> ");
         scanf("%lf", &n1);
@@ -115,7 +115,7 @@ double porcentagem(const double arr[], int len){
                 cont++;
             }
         }
-    } else if(escolha == '2'){
+    } else if(choose == '2'){
         printf("Digite um valor para saber a porcentagem dos valores maiores que ele:\n");
         printf(">> ");
         scanf("%lf", &n1);
@@ -124,7 +124,7 @@ double porcentagem(const double arr[], int len){
                 cont++;
             }
         }
-    } else if(escolha == '3'){
+    } else if(choose == '3'){
         printf("Digite um valor para saber a porcentagem dos valores iguais a ele:\n");
         printf(">> ");
         scanf("%lf", &n1);
@@ -133,7 +133,7 @@ double porcentagem(const double arr[], int len){
                 cont++;
             }
         }
-    } else if(escolha == '4'){
+    } else if(choose == '4'){
         printf("Digite os valorres de um intervalo para saber a porcentagem dos valores presentes nele:\n");
         printf(">> ");
         scanf("%lf%lf", &n1, &n2);
@@ -152,22 +152,22 @@ double porcentagem(const double arr[], int len){
 double mediana(double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
-    rol(arr, len); // Ordenar o conjunto
-    int indice; // Indice do valor da mediana
+    rol(arr, len); /* sort the set */
+    int indice; /* index of median value */
 
     if(len % 2 == 0){
         indice = (int)(len + 1)/2;
-        return (arr[indice - 1] + arr[indice])/2; // Como o intervalo do array começa de 0, então reduzimos um valor ao indice
+        return (arr[indice - 1] + arr[indice])/2; /* as the array begins with 0 we reduce one to the index */
     } else if(len % 2 == 1){
         indice = (len + 1)/2;
-        return arr[indice - 1]; // Como o intervalo do array começa de 0, então reduzimos um valor ao indice
+        return arr[indice - 1]; /* as the array begins with 0 we reduce one to the index */
     }
 }
 
 double quartil(double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
-    double per; // Valor do percentil
+    double percentile; /* percentile value */
 
     printf("====================================\n");
     printf("[1] Primeiro Quartil\n");
@@ -176,59 +176,59 @@ double quartil(double arr[], int len){
     printf("====================================\n");
     printf(">> ");
 
-    char v; // Variavel do tipo char para escolher uma das opções anteriores
-    scanf(" %c", &v);
+    char choose; /* char variable to choose some stuff */
+    scanf(" %c", &choose);
     system(LIMPAR);
 
-    if(v == '1'){
-        per = percentil(arr, 0.25, len);
-    } else if(v == '2'){
-        per = percentil(arr, 0.50, len);
-    } else if(v == '3'){
-        per = percentil(arr, 0.75, len);
+    if(choose == '1'){
+        percentile = percentil(arr, 0.25, len);
+    } else if(choose == '2'){
+        percentile = percentil(arr, 0.50, len);
+    } else if(choose == '3'){
+        percentile = percentil(arr, 0.75, len);
     } else{
         printf("ERRO! Valor inserido nao permitido.\n");
     }
 
-    return per;
+    return percentile;
 }
 
 double decil(double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
-    double per; // Valor do percentil
+    double percentile; /* percentile value */
 
     printf("====================================\n");
     printf("Digite qual Decil(de 1 a 9)\n");
     printf("====================================\n");
     printf(">> ");
 
-    int v;
-    scanf("%d", &v);
+    int choose;
+    scanf("%d", &choose);
     system(LIMPAR);
 
-    if(v >= 1 && v <= 9){
-        per = percentil(arr, 0.1*v, len);
+    if(choose >= 1 && choose <= 9){
+        percentile = percentil(arr, 0.1*choose, len);
     } else{
         printf("ERRO! Valor inserido nao permitido.\n");
     }
 
-    return per;
+    return percentile;
 }
 
 double percentil(double arr[], double p, int len){
     /*  arr: array to the values
         p: percentile
         len: length of the array */
-    rol(arr, len); // Ordenar conjunto de dados
+    rol(arr, len); /* sort the set */
     double per = p * (len + 1);
     int indice = (int) per;
 
-    if(indice >= len){ // Caso o valor do indice esteja acima do ultimo valor do indice
-        return arr[len - 1]; // Retornar o último valor do conjunto
-    } else if(indice == 0){ // Caso a valor do indice esteja abaixo do primeiro valor do conjunto
-        return arr[indice]; // Retornar o primeiro valor do conjunto
-    }else if(indice == per){ // Caso o valor do percentil já seja um valor inteiro
+    if(indice >= len){ /* if the value if above of the last value of the array */
+        return arr[len - 1]; /* return the last number of the array */
+    } else if(indice == 0){ /* if the value is below of the first value of the array */
+        return arr[indice]; /* return the first number of the array */
+    }else if(indice == per){ /* if the value already is a integer */
         return arr[indice - 1];;
     }else{
         return (arr[indice - 1] + arr[indice])/2;
@@ -238,16 +238,16 @@ double percentil(double arr[], double p, int len){
 double variancia(const double arr[], char type, int len){
     /*  arr: array to the values
         len: length of the array */
-    double X = mediaArit(arr, len); // Média do conjunto de dados
+    double X = mediaArit(arr, len); /* the mean */
     double soma = 0;
 
     for(int i = 0; i < len; i++){
         soma += (arr[i] - X) * (arr[i] - X);
     }
 
-    if(type == 'a'){ /* If is a sample */
+    if(type == 'a'){ /* if is a sample */
         return soma/(len - 1);
-    } else if(type == 'p'){ /* If is a population */
+    } else if(type == 'p'){ /* if is a population */
         return soma/len;
     }
 }
@@ -255,16 +255,16 @@ double variancia(const double arr[], char type, int len){
 double desvioPadrao(const double arr[], char type, int len){
     /*  arr: array to the values
         len: length of the array */
-    double var = variancia(arr, type, len); // Variancia
+    double var = variancia(arr, type, len); /* variance */
 
-    return pow(var, 0.5); // Raiz quadrada da variancia
+    return pow(var, 0.5); /* Raiz quadrada da variancia square root of variance */
 }
 
 double coeficienteDeVariacao(const double arr[], char type, int len){
     /*  arr: array to the values
         len: length of the array */
-    double s = desvioPadrao(arr, type, len); // Desvio padrão
-    double X = mediaArit(arr, len); // Média do conjunto
+    double s = desvioPadrao(arr, type, len); /* standard deviation */
+    double X = mediaArit(arr, len); /* the mean of the set */
 
     return (s/X) * 100;
 }
