@@ -13,12 +13,16 @@ void intervaloDeClasses(double arr[], int len){
         len: length of the array */
     rol(arr, len); /* sort the set */
     double amp = amplitude(arr, len);
-    double k = round(sqrt(len)); /* number of classes */
+    int k; /* number of classes */
     double h;
     double limInferior;
     double limSuperior;
 
-    h = amp / k;
+    printf("Digite o numero de classes:\n");
+    scanf("%d", &k);
+    system(LIMPAR);
+
+    h = round((amp / k) * 100)/100; /* class amplitude */
     limInferior = arr[0];
     limSuperior = limInferior + h;
 
@@ -63,24 +67,21 @@ void moda(double arr[], int len){
     /*  arr: array to the values
         len: length of the array */
     rol(arr, len); /* sort the set */
-    double frequencia[len]; /* array of frequency */
+    int freqLength;
     int cont = 0;
     double max;
 
-    for(int f = 0; f < len; f++){ /* calculates the frequency */
-        cont++;
-        if(f == (len - 1) || arr[f] != arr[f + 1]){
-            frequencia[f] = (double)cont;
-            cont = 0;
-        }
-    }
+    freqLength = unique(arr, len); /* return number of the diferent values int the array */
 
-    max = maximo(frequencia, len); /* receive the biggest value of the frequency array */
+    double frequencia[freqLength]; /* array of frequency */
+    int indice[freqLength]; /* array of index */
+    frequency(arr, frequencia, indice, len); /* store the frequency in the frequencia array */
+    max = maximo(frequencia, freqLength); /* receive the biggest value of the frequency array */
 
     printf("Moda: ");
-    for(int i = 0; i < len; i++){ /* find the mode and print */
+    for(int i = 0; i < freqLength; i++){ /* find the mode and print */
         if(frequencia[i] == max){
-            printf("(%.0f) %.2f ", frequencia[i], arr[i]);
+            printf("(%.0f) %.2f ", frequencia[i], arr[indice[i]]);
         }
     }
     printf("\n");

@@ -37,7 +37,7 @@ double amplitude(double arr[], int len){
 
 double sort(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double aux; /* hold value to swap */
 
     for(int i = 0; i < len - 1; i++){
@@ -63,4 +63,40 @@ int combinacao(int n, int k){
     /*  n: total numbers in the case
         k: the sample in the case */
     return fatorial(n)/(fatorial(k)*fatorial(n - k));
+}
+
+int unique(const double arr[], int size){
+    int difNumbers = 1; /* number os diferent numbers */
+
+    for(int i = 0; i < size - 1; i++){
+        if(arr[i] != arr[i + 1]){
+            difNumbers++;
+        }
+    }
+
+    return difNumbers;
+}
+
+void frequency(const double arr[], double freq[], int index[], int size){
+    int fsize = 1;
+    freq[0] = arr[0];
+    index[0] = 0;
+    for(int i = 0; i < size - 1; i++){
+        if(arr[i] != arr[i + 1]){
+            freq[fsize] = arr[i + 1];
+            index[fsize] = i + 1;
+            fsize++;
+        }
+    }
+    int cont = 0;
+
+    for(int i = 0; i < fsize; i++){
+        for(int j = 0; j < size; j++){
+            if(freq[i] == arr[j]){
+                cont++;
+            }
+        }
+        freq[i] = cont;
+        cont = 0;
+    }
 }
