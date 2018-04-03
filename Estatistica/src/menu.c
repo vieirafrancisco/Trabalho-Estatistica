@@ -5,6 +5,7 @@
 /* Global variables */
 double gDados[SIZE] = {0};
 int gTamanho;
+char gTipo;
 
 /* Menu functions */
 void menu(void){ // Menu de opcoes
@@ -52,6 +53,15 @@ void inserirDados(void){ // Inserir os dados
     printf(">> ");
 
     scanf("%d", &gTamanho);
+    system(LIMPAR);
+
+    printf("====================================\n");
+    printf("[a] Amostra\n");
+    printf("[p] Populacao\n");
+    printf("====================================\n");
+    printf(">> ");
+
+    scanf(" %c", &gTipo);
     system(LIMPAR);
 
     printf("=======================================\n");
@@ -162,35 +172,40 @@ void calcular(void){ // Calcular dados
         printf("============================================================\n");
         printf("Digite a medida do percentil: (ex: 0.24 = 24%%, 0.38 = 38%%)\n");
         printf(">> ");
-
         float medida;
         scanf("%f", &medida);
         system(LIMPAR);
-
         printf("Percentil %.2f: %.2f\n", medida, percentil(gDados, medida, gTamanho));
         calcular();
         break;
 
         case 'b': // Variancia
         system(LIMPAR);
-        printf("Variancia: %.2f\n", variancia(gDados, gTamanho));
+        printf("Variancia: %.2f\n", variancia(gDados, gTipo, gTamanho));
         calcular();
         break;
 
         case 'c':
         system(LIMPAR);
-        printf("Desvio Padrao: %.2f\n", desvioPadrao(gDados, gTamanho));
+        printf("Desvio Padrao: %.2f\n", desvioPadrao(gDados, gTipo, gTamanho));
         calcular();
         break;
 
         case 'd':
         system(LIMPAR);
-        printf("Coeficiente de Variacao: %.2f\n", coeficienteDeVariacao(gDados, gTamanho));
+        printf("Coeficiente de Variacao: %.2f\n", coeficienteDeVariacao(gDados, gTipo, gTamanho));
         calcular();
         break;
 
         case 'e':
         system(LIMPAR);
+        if(gTipo == 'p'){
+            printf("Erro Padrao: %.4f\n", erroPadrao(gDados, gTipo, gTamanho));
+        } else if(gTipo == 'a'){
+            printf("ERRO! O conjunto de dados e de uma amostra.\nPara calcular necessita ser dados de uma populacao!\n");
+        } else{
+            printf("ERRO! Valor inserido nao permitido.\nNao e uma amostra, nem uma populacao\n");
+        }
         calcular();
         break;
 

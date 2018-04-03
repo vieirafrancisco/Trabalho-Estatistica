@@ -4,7 +4,7 @@
 /* Support functions */
 double maximo(const double arr[], int len){ // Retorna o indice do valor maximo do vetor
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     int dado; // Contador para passar pelos dados
     double max; // Valor maximo
 
@@ -20,10 +20,8 @@ double maximo(const double arr[], int len){ // Retorna o indice do valor maximo 
 
 void printArray(const double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
-  int dado; // Contador para percorrer os dados
-
-  for(dado = 0; dado < len; dado++){ // Loop para imprimir o conjunto de dados
+        len: length of the array */
+  for(int dado = 0; dado < len; dado++){ // Loop para imprimir o conjunto de dados
     printf("%.2f ", arr[dado]);
   }
   printf("\n");
@@ -31,7 +29,7 @@ void printArray(const double arr[], int len){
 
 double amplitude(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     sort(arr, len); // Ordenar o conjunto de dados
 
     return arr[len - 1] - arr[0];

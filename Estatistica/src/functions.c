@@ -234,51 +234,50 @@ double percentil(double arr[], double p, int len){
     }
 }
 
-double variancia(const double arr[], int len){
+double variancia(const double arr[], char type, int len){
     /*  arr: array to the values
         len: length of the array */
     double X = mediaArit(arr, len); // Média do conjunto de dados
     double soma = 0;
-    char c;
 
     for(int i = 0; i < len; i++){
         soma += (arr[i] - X) * (arr[i] - X);
     }
 
-    printf("====================================\n");
-    printf("[1] Amostra\n");
-    printf("[2] Populacao\n");
-    printf("====================================\n");
-    printf(">> ");
-
-    scanf(" %c", &c);
-    system(LIMPAR);
-
-    if(c == '1'){
+    if(type == 'a'){ /* If is a sample */
         return soma/(len - 1);
-    } else if(c == '2'){
+    } else if(type == 'p'){ /* If is a population */
         return soma/len;
-    } else{
-        printf("ERRO! Valor inserido nao permitido.\n");
-        return 0;
     }
 }
 
-double desvioPadrao(const double arr[], int len){
+double desvioPadrao(const double arr[], char type, int len){
     /*  arr: array to the values
         len: length of the array */
-    double var = variancia(arr, len); // Variancia
+    double var = variancia(arr, type, len); // Variancia
 
     return pow(var, 0.5); // Raiz quadrada da variancia
 }
 
-double coeficienteDeVariacao(const double arr[], int len){
+double coeficienteDeVariacao(const double arr[], char type, int len){
     /*  arr: array to the values
         len: length of the array */
-    double s = desvioPadrao(arr, len); // Desvio padrão
+    double s = desvioPadrao(arr, type, len); // Desvio padrão
     double X = mediaArit(arr, len); // Média do conjunto
 
     return (s/X) * 100;
+}
+
+double erroPadrao(double arr[], int type, int len){
+    /*  arr: array to the values
+        len: length of the array */
+    int tamanho;
+    rol(arr, len);
+
+    printf("Digite o tamanho da amostra:\n");
+    scanf("%d", &tamanho);
+
+    return desvioPadrao(arr, type, len)/pow(tamanho, 0.5);
 }
 
 double distribuicaoBinomial(double p, int n, int k){

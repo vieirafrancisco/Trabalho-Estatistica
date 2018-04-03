@@ -20,10 +20,10 @@ double mediana(double arr[], int len);
 double quartil(double arr[], int len);
 double decil(double arr[], int len);
 double percentil(double arr[], double p, int len);
-double variancia(const double arr[], int len);
-double desvioPadrao(const double arr[], int len);
-double coeficienteDeVariacao(const double arr[], int len);
-double erroPadrao(const double arr[]); // Falta fazer
+double variancia(const double arr[], char type, int len);
+double desvioPadrao(const double arr[], char type, int len);
+double coeficienteDeVariacao(const double arr[], char type, int len);
+double erroPadrao(double arr[], int type, int len);
 double distribuicaoBinomial(double p, int n, int k);
 double distribuicaoPoisson(double lamb, int k);
 
