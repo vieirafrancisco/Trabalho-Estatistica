@@ -24,7 +24,7 @@ double variancia(const double arr[], int len);
 double desvioPadrao(const double arr[], int len);
 double coeficienteDeVariacao(const double arr[], int len);
 double erroPadrao(const double arr[]); // Falta fazer
-double distribuicaoBinomial(const double arr[]); // Falta fazer
-double distribuicaoDePoisson(const double arr[]); // Falta fazer
+double distribuicaoBinomial(double p, int n, int k);
+double distribuicaoPoisson(double lamb, int k);
 
 #endif // FUNCTIONS_H_INCLUDED

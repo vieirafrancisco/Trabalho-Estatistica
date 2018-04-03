@@ -189,6 +189,40 @@ void calcular(void){ // Calcular dados
         calcular();
         break;
 
+        case 'e':
+        system(LIMPAR);
+        calcular();
+        break;
+
+        case 'f':
+        system(LIMPAR);
+        double probSucesso;
+        int numEnsaios;
+        int numSucessos;
+        printf("Digite a probabilidade de sucesso:\n");
+        scanf("%lf", &probSucesso);
+        printf("Digite o numero ensaios:\n");
+        scanf("%d", &numEnsaios);
+        printf("Digite o numero de sucessos:\n");
+        scanf("%d", &numSucessos);
+        system(LIMPAR);
+        printf("Distribuicao Binomial: %.4f\n", distribuicaoBinomial(probSucesso,numEnsaios,numSucessos));
+        calcular();
+        break;
+
+        case 'g':
+        system(LIMPAR);
+        double taxaOcorrencia;
+        int k;
+        printf("Digite a taxa de ocorrencia:\n");
+        scanf("%lf", &taxaOcorrencia);
+        printf("Digite o numero de sucessos:\n");
+        scanf("%d", &k);
+        system(LIMPAR);
+        printf("Distribuicao de Poisson: %.4f\n", distribuicaoPoisson(taxaOcorrencia, k));
+        calcular();
+        break;
+
         default:
         system(LIMPAR);
         printf("ERRO! Valor inserido nao permitido.\n");

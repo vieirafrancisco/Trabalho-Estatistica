@@ -52,3 +52,17 @@ double sort(double arr[], int len){
         }
     }
 }
+
+int fatorial(int n){
+    /*  n: the value to take the fatorial */
+    if(n == 0){
+        return 1;
+    }
+    return fatorial(n - 1) * n;
+}
+
+int combinacao(int n, int k){
+    /*  n: total numbers in the case
+        k: the sample in the case */
+    return fatorial(n)/(fatorial(k)*fatorial(n - k));
+}

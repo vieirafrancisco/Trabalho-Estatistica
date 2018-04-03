@@ -4,13 +4,13 @@
 /* Main functios */
 void rol(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     sort(arr, len);
 }
 
 void intervaloDeClasses(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     rol(arr, len); /* sort the set */
     double amp = amplitude(arr, len);
     double k = round(sqrt(len)); /* number of classes */
@@ -31,7 +31,7 @@ void intervaloDeClasses(double arr[], int len){
 
 double mediaArit(const double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double soma; /* sum */
 
     for(int dado = 0; dado < len; dado++){
@@ -43,7 +43,7 @@ double mediaArit(const double arr[], int len){
 
 double mediaPond(const double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     int pesos[len];
     int somaPesos = 0;
     double somaValores = 0;
@@ -61,7 +61,7 @@ double mediaPond(const double arr[], int len){
 
 void moda(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     rol(arr, len); /* sort the set */
     double frequencia[len]; /* array of frequency */
     int cont = 0;
@@ -88,7 +88,7 @@ void moda(double arr[], int len){
 
 double porcentagem(const double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double n1, n2; // Variaveis para valores dados pelo unsuario
     double porc; // Porcentagem
     int cont = 0; // Contador
@@ -150,7 +150,7 @@ double porcentagem(const double arr[], int len){
 
 double mediana(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     rol(arr, len); // Ordenar o conjunto
     int indice; // Indice do valor da mediana
 
@@ -165,7 +165,7 @@ double mediana(double arr[], int len){
 
 double quartil(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double per; // Valor do percentil
 
     printf("====================================\n");
@@ -194,7 +194,7 @@ double quartil(double arr[], int len){
 
 double decil(double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double per; // Valor do percentil
 
     printf("====================================\n");
@@ -218,7 +218,7 @@ double decil(double arr[], int len){
 double percentil(double arr[], double p, int len){
     /*  arr: array to the values
         p: percentile
-        len: length of the array*/
+        len: length of the array */
     rol(arr, len); // Ordenar conjunto de dados
     double per = p * (len + 1);
     int indice = (int) per;
@@ -236,7 +236,7 @@ double percentil(double arr[], double p, int len){
 
 double variancia(const double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double X = mediaArit(arr, len); // Média do conjunto de dados
     double soma = 0;
     char c;
@@ -266,7 +266,7 @@ double variancia(const double arr[], int len){
 
 double desvioPadrao(const double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double var = variancia(arr, len); // Variancia
 
     return pow(var, 0.5); // Raiz quadrada da variancia
@@ -274,9 +274,24 @@ double desvioPadrao(const double arr[], int len){
 
 double coeficienteDeVariacao(const double arr[], int len){
     /*  arr: array to the values
-        len: length of the array*/
+        len: length of the array */
     double s = desvioPadrao(arr, len); // Desvio padrão
     double X = mediaArit(arr, len); // Média do conjunto
 
     return (s/X) * 100;
+}
+
+double distribuicaoBinomial(double p, int n, int k){
+    /*  p: the probability of success
+        n: number of essay
+        k: number of success */
+    return combinacao(n,k) * (pow(p,k)) * (pow(1 - p, n - k));
+}
+
+double distribuicaoPoisson(double lamb, int k){
+    /*  lamb: ocurrence rate
+        k; number of success */
+    double e = 2.718281828;
+
+    return ((pow(e, lamb * -1)) * (pow(lamb, k)))/ fatorial(k);
 }
